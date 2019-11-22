@@ -1,0 +1,33 @@
+<section class="py-2">
+  <div class="row">
+    <div class="col-md-6 text-center">
+      <h1 class="display-3 mt-3 pt-5">
+        Demo Payment 
+      </h1><p class="lead"> Learn payment gateway with node and stripe</p>
+      <form action="/charge" method="POST">
+      <script
+        src="https://checkout.stripe.com/checkout.js"
+        class="stripe-button"
+        data-key= require("./api-key.json").publicKey
+        dat-amount="2500"
+        data-name="Payment Prac"
+        data-description="Demo by Aemie"
+        data-image="/img/marketplace.png"
+        data-locale="auto">
+      </script>
+      <script>
+        //Hide default stripe button
+        document.getElementsByClassName('stripe-button-el')[0].style.display = 'none';
+      </script>
+      <!-- Add own pay with card button -->
+      <button type="submit" class="btn btn-dark text-white btn-lg">
+        Purchase for $25
+      </button>
+    </form>
+    </div>
+    <div class="col-md-6 mt-2 pt-3">
+      <img src="/img/book.png" alt="" class="img-fluid">
+    </div>
+
+  </div>
+</section>
