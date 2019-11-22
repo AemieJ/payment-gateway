@@ -3,8 +3,6 @@
 
 To get familiar with payment gateway integration with stripe and node.
 
-![Showcase](public/img/showcase.png")
-
 ### Prerequisites
 
 Project was built with node and express . The basic prerequisites is to install node on your local machine.
