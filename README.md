@@ -3,7 +3,7 @@
 
 To get familiar with payment gateway integration with stripe and node.
 
-![Showcase]("showcase.png")
+![Showcase](./public/img/showcase.png")
 
 ### Prerequisites
 
