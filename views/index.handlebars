@@ -8,12 +8,13 @@
       <script
         src="https://checkout.stripe.com/checkout.js"
         class="stripe-button"
-        data-key= require("./api-key.json").publicKey
-        dat-amount="2500"
+        data-key= "{{ stripePublicKey }}"
+        data-amount="250000"
         data-name="Payment Prac"
         data-description="Demo by Aemie"
         data-image="/img/marketplace.png"
-        data-locale="auto">
+        data-locale="auto"
+        data-currency="inr">
       </script>
       <script>
         //Hide default stripe button
@@ -21,9 +22,9 @@
       </script>
       <!-- Add own pay with card button -->
       <button type="submit" class="btn btn-dark text-white btn-lg">
-        Purchase for $25
+        Purchase for ₹2500
       </button>
-    </form>
+    </form> 
     </div>
     <div class="col-md-6 mt-2 pt-3">
       <img src="/img/book.png" alt="" class="img-fluid">

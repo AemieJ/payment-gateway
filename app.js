@@ -16,32 +16,37 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 app.use(express.static(`${__dirname}/public`));
 
-// Index Handlebar
+// Index Route
 app.get('/' , (req , res)=>{
-  res.render('index');
+  res.render('index' , {
+    stripePublicKey: require("./api-key.json").publicKey
+  });
 });
 
 //Charge route
 app.post('/charge', (req, res) => {
-  const amount = 2500;
-  console.log(req.body);
-  res.render('success');
-  /*stripe.customers.create({
+  
+  //console.log(req.body);
+  const amount = 250000;
+  /* HANDLING PROMISES */
+  stripe.customers.create({
     email: req.body.stripeEmail,
     source: req.body.stripeToken
   })
-  .then((source)=>{
-    return stripe.charges.create({
-    amount: amount,
-    description: 'Demo on Payment',
-    currency: 'usd',
-    customer: source.customer
+  .then(customer =>
+    stripe.charges.create({
+      amount,
+      description: "Demo on Payment",
+      currency: "inr",
+      customer: customer.id
+  }))
+  .then(charge => res.render('charge'))
+  .catch(err => {
+    console.log("Error:", err);
+    res.status(500).send({error: "Purchase Failed"});
   });
-})
-  .then(charge => res.render('success'))
-  .catch(err => {alert('Error Occured')});*/
 });
 
-app.listen(port , ()=>{
+app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
