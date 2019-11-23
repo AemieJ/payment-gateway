@@ -37,7 +37,7 @@ app.post('/charge', (req, res) => {
   };
 
   /* CREATING DATABSE WITH MONGODB */
-  MongoClient.connect(url , (err , db)=>{
+  MongoClient.connect(url ,  { useUnifiedTopology: true } , (err , db)=>{
     if (err) throw err;
     var database = db.db("payments");
     database.collection("customers").insertOne(dataObject , (err , res)=>{
