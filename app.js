@@ -2,10 +2,13 @@ const express = require('express');
 const secretKey = require("./api-key.json").secretKey;
 const stripe = require('stripe')(secretKey);
 const bodyParser = require('body-parser');
+const mongodb = require('mongodb');
 const expressHandleBar = require('express-handlebars');
 
 const app = express();
 const port = 3000; 
+const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017/";
 
 // MIDDLEWARE
 app.engine('handlebars' , expressHandleBar({defaultLayout:'main'}));
@@ -25,9 +28,33 @@ app.get('/' , (req , res)=>{
 
 //Charge route
 app.post('/charge', (req, res) => {
-  
-  //console.log(req.body);
   const amount = 250000;
+  
+  dataObject = {
+    email: req.body.stripeEmail , 
+    token: req.body.stripeToken ,
+    amount: 2500
+  };
+
+  /* CREATING DATABSE WITH MONGODB */
+  MongoClient.connect(url , (err , db)=>{
+    if (err) throw err;
+    var database = db.db("payments");
+    database.collection("customers").insertOne(dataObject , (err , res)=>{
+        if (err) throw err;
+        db.close();
+    });
+
+    /* This will print all the customer in the database 
+    database.collection("customers").find({}).toArray((err , result)=>{
+        if (err) throw err;
+        console.log(result);
+        db.close();
+    }); 
+    */
+
+  });
+
   /* HANDLING PROMISES */
   stripe.customers.create({
     email: req.body.stripeEmail,
